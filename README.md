@@ -59,6 +59,7 @@ Length of data point in raw data:  (11600,)
  
 In [165]:
 # Define all require value to futher calculate the parameter
+
 Freezer_Temp = VT_df['Favg']
 Fridge_Temp = VT_df['Ravg']
 Int_Energy = VT_df ['Int_Power']
@@ -88,7 +89,7 @@ print('No of defrost in data :', len(Defrost_end))
 [1748.0, 11454.0]
 No of defrost in data : 2
 
-Data cleaning for on off cycle because too much flutuation in data
+# Data cleaning for on off cycle because too much flutuation in data
 In [167]:
 def cycle_time_data_clean (xxx):
 
@@ -116,7 +117,7 @@ aa = int(Defrost_start[0])
 Power_x = Power[:aa,]
 
 Power_x_period = Power_x
-# Power_x  =  cycle_time_data_clean (Power_x)
+Power_x  =  cycle_time_data_clean (Power_x)
 print('No of data length in X period ', len(Power_x))
 
 No of data length in X period  1708
@@ -131,7 +132,7 @@ Out[169]:
 
  
 
-Average Power calculation in Each Period ( function )
+# Average Power calculation in Each Period ( function )
 In [170]:
 
 def average_power (raw_data):
@@ -151,7 +152,7 @@ def average_power (raw_data):
         cycle_avg.append(cycle_a)
     return cycle_avg ,number_cycle
 
-On Off Cycle calculation based on function
+# On Off Cycle calculation based on function
 In [171]:
 
 def on_off_cycle (raw_data):
@@ -275,8 +276,8 @@ Average Fridge in X Period : 3.4699611070941145
 In [182]:
 x_time_End = no_cycle_x_period[-1]
 print ('No of cycle period last time = ', no_cycle_x_period[-1]) 
-x_time_Start = no_cycle_x_period[-6]
-print ('No of cycle period first time= ', no_cycle_x_period[-6]) 
+x_time_Start = no_cycle_x_period[-8]
+print ('No of cycle period first time= ', no_cycle_x_period[-8]) 
 x_Time = (x_time_End - x_time_Start ) /120 
 print ('X Period in Hours  = ', x_Time      )
 
@@ -286,6 +287,7 @@ X Period in Hours  =  3.316666666666667
 
 # Calculate all value in defrost to defrost cycle
 In [183]:
+
 # data for power in Y period
 ab = int(Defrost_end[0])
 bb = int(Defrost_start[1])
@@ -363,8 +365,8 @@ Average Fridge in Y Period : 3.7575209124865965
 In [191]:
 y_time_End = no_cycle_y_period[-1]
 print ('No of cycle period last time = ', no_cycle_y_period[-1]) 
-y_time_Start = no_cycle_y_period[-6]
-print ('No of cycle period first time= ', no_cycle_y_period[-6]) 
+y_time_Start = no_cycle_y_period[-8]
+print ('No of cycle period first time= ', no_cycle_y_period[-8]) 
 y_Time = (y_time_End - y_time_Start ) /120 
 print ('Y Period in Hours  = ', y_Time      )
 
@@ -418,7 +420,7 @@ Time at Start up  y Period :  10911
 Energy at End up  y Period :  2620.7000122070312
 Energy at Start up  y Period :  2534.0000610351562
 
-Average Power , Temperature, other difference at end up X Period to end up Y period
+# Average Power , Temperature, other difference at end up X Period to end up Y period
 In [196]:
 #Average Power at end up  X Period to end up Y period
 Power_avg_xy = np.mean(Power[X_time_End:Y_time_End])
@@ -472,7 +474,7 @@ data ponit taken for D period:  [1243, 1350, 1458, 1566, 1640, 1641]
 In [202]:
 
 # f period taken from before of 1st defrost
-no_cycle_f_period = no_cycle_y_period[4:10] 
+no_cycle_f_period = no_cycle_y_period[6:16] 
 no_cycle_f_period = [ x + ab for x in no_cycle_f_period]
 print('data ponit taken for D period: ' , no_cycle_f_period  )
 
@@ -481,12 +483,14 @@ data ponit taken for D period:  [2240, 2345, 2449, 2553, 2658, 2763]
 # D & F Period calcuated, now need to calculated value Time , Energy, temperature
 In [203]:
 
-d_time_End = no_cycle_d_period[-1]
-print ('No of cycle period last time = ', no_cycle_d_period[-1]) 
-d_time_Start = no_cycle_d_period[-6]
-print ('No of cycle period first time= ', no_cycle_d_period[-6]) 
+d_time_End = no_cycle_d_period[7]
+print ('No of cycle period last time = ', no_cycle_d_period[7]) 
+d_time_Start = no_cycle_d_period[2]
+print ('No of cycle period first time= ', no_cycle_d_period[2]) 
 d_Time = (d_time_End - d_time_Start ) /120 
 print ('D Period in Hours  = ', d_Time      )
+
+
 
 No of cycle period last time =  1641
 No of cycle period first time=  1243
@@ -523,8 +527,8 @@ Energy at Start of  f Period :  569.5499877929688
 
 # Average power , Temperature , Energy in individual D & F periods
 In [206]:
-#Average Power in  D Period						
-#Average Power in  F Period						
+# Average Power in  D Period						
+# Average Power in  F Period						
 Power_avg_D = np.mean(Power[D_time_Start:D_time_End])
 print('Average Power in  D Period; ', Power_avg_D)
 
@@ -534,8 +538,8 @@ print('Average Power in  F Period; ', Power_avg_F)
 Average Power in  D Period;  29.00175880217672
 Average Power in  F Period;  27.171510514292162
 In [207]:
-#Average Fridge Temperature in  D Period						
-#Average Fridge Temperature  in  F Period						
+# Average Fridge Temperature in  D Period						
+# Average Fridge Temperature  in  F Period						
 
 Freezer_avg_D = np.mean(Freezer_Temp[D_time_Start:D_time_End])
 
@@ -548,8 +552,8 @@ print('Average Freezer Temperature in  F Period; ', Freezer_avg_F)
 Average Freezer Temperature in  D Period;  -18.63528641791799
 Average Freezer Temperature in  F Period;  -18.716508627940783
 In [208]:
-#Average Freezer Temperature in  D Period						
-#Average Freezer Temperature  in  F Period						
+# Average Freezer Temperature in  D Period						
+# Average Freezer Temperature  in  F Period						
 
 Fridge_avg_D = np.mean(Fridge_Temp[D_time_Start:D_time_End])
 
