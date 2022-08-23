@@ -784,17 +784,6 @@ In [177]:
 
 
 
-
-# data = {'Product': ['Desktop Computer','Printer','Tablet','Monitor'],
-#         'Price': [1200,150,300,450]
-#         }
-​
-# df = pd.DataFrame(data, columns = ['Product', 'Price'])
-​
-# print (df)
-
-
-
 In [178]:
 
 
@@ -811,7 +800,7 @@ X & Y Period Power and Temperature
 In [179]:
 
 
-# X & Y Period length 
+## X & Y Period length 
 print (' X period Start time = ', X_time_Start) 
 print (' X period End time = ', X_time_End  ) 
 ​
@@ -895,7 +884,7 @@ Energy at Start up  X Period :  246.00003051757812
 Energy at End up  y Period :  2600.0799560546875
 Energy at Start up  y Period :  2421.909957885742
 
-F & D Period Power and Temperature
+# F & D Period Power and Temperature
 In [183]:
 
 
@@ -919,6 +908,7 @@ In [184]:
 Power_avg_dd = np.mean(Power[D_time_Start:D_time_End])
 print('Average Power at   D Period ; ', Power_avg_dd)
 ​
+
 # Average Freezer Temperature F Period 
 Freezer_avg_dd = np.mean(Freezer_Temp[D_time_Start:D_time_End])
 ​
@@ -936,13 +926,13 @@ Average Fridge Temperature at  D Period;  3.598611584401252
 In [185]:
 
 
-## Period wise Freezer & Fride average data 
+##  Period wise Freezer & Fride average data 
 ​
 #Average Power at  X Period 
 Power_avg_ff = np.mean(Power[F_time_Start:F_time_End])
 print('Average Power at   F Period ; ', Power_avg_ff)
 ​
-# Average Freezer Temperature F Period 
+#  Average Freezer Temperature F Period 
 Freezer_avg_ff = np.mean(Freezer_Temp[F_time_Start:F_time_End])
 ​
 print('Average Freezer Temperature at  F Period ; ', Freezer_avg_ff)
@@ -975,16 +965,16 @@ print ('Y Period in Hours  = ', F_Time )
 
 
 
- D period Start time =  1155
- D period End time =  1748
- F period Start time =  3211
- F period End time =  3799
+D period Start time =  1155
+D period End time =  1748
+F period Start time =  3211
+F period End time =  3799
 D Period in Hours  =  4.941666666666666
 Y Period in Hours  =  4.9
 In [187]:
 
 
-#Estimated  Average Power at   D Period &  F period
+# Estimated  Average Power at   D Period &  F period
 Power_avg_xy_e = (Power_avg_xx + Power_avg_yy)/2
 ​
 print('Estimated  Average Power at   X Period &  Y period: ', Power_avg_xy_e)
@@ -997,7 +987,7 @@ In [188]:
 
 
 
-#Estimated  Average Power at   D Period &  F period
+# Estimated  Average Power at   D Period &  F period
 Power_avg_df_e = (Power_avg_D + Power_avg_F)/2
 ​
 print('Estimated  Average Power at   D Period &  F period: ', Power_avg_df_e)
@@ -1023,21 +1013,21 @@ Estimated time ration between X and Y Period :  1.0060679611650485
 Estimated time ration between D and F Period :  1.008503401360544
 In [190]:
 
-
-#Tspread_F  °C  0.5 °C  0.06        0.04    
-#Tspread_R  °C  0.5 °C  0.05        0.09    
-#P_spread(%)    %   < 2%    0.00        0.01    
-#P_spread(W)    W   1W  0.06        0.29    
+## Requirement for Spared check 
+ Tspread_F  °C  0.5 °C  0.06        0.04    
+ Tspread_R  °C  0.5 °C  0.05        0.09    
+ P_spread(%)    %   < 2%    0.00        0.01    
+ P_spread(W)    W   1W  0.06        0.29    
 ​
 
 
 
 
-Power and Temperature spread check
+# Power and Temperature spread check
 In [191]:
 
 
-#P_spread(W)    W   1W  0.06        0.29    
+# P_spread(W)    W   1W  0.06        0.29    
 ​
 Power_temp_spread_xy_e= np.abs(Power_avg_xx - Power_avg_yy)
 Power_temp_spread_df_e= np.abs(Power_avg_dd - Power_avg_ff)
@@ -1052,7 +1042,7 @@ Power spread in D & F Period   =  0.4319446050196021
 In [192]:
 
 
-#P_spread(%)    %   < 2%    0.00        0.01    
+# P_spread(%)    %   < 2%    0.00        0.01    
 Power_temp_spread_xy_t= (np.abs(Power_avg_xx - Power_avg_yy)/Power_avg_xy_e)*100
 Power_temp_spread_df_t= (np.abs(Power_avg_dd - Power_avg_ff)/Power_avg_df_e)*100
 print ('Power spread in X & Y Period in pecentage   = ', Power_temp_spread_xy_t,'%')
