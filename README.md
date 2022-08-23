@@ -777,3 +777,538 @@ Percentage increase in Favg Temperature due to defrost factor : 0.55976197832408
 Percentage increase in Favg Temperature due to defrost factor : 0.4850660511832155 %
 In [ ]:
  
+
+
+Value calculation for Data export to excel
+In [177]:
+
+
+
+
+# data = {'Product': ['Desktop Computer','Printer','Tablet','Monitor'],
+#         'Price': [1200,150,300,450]
+#         }
+​
+# df = pd.DataFrame(data, columns = ['Product', 'Price'])
+​
+# print (df)
+
+
+
+In [178]:
+
+
+plt.figure(figsize=(20, 10))
+plt.plot(Power)
+
+
+Out[178]:
+[<matplotlib.lines.Line2D at 0x1ca030dc610>]
+
+
+
+X & Y Period Power and Temperature
+In [179]:
+
+
+# X & Y Period length 
+print (' X period Start time = ', X_time_Start) 
+print (' X period End time = ', X_time_End  ) 
+​
+print (' Y period Start time = ',Y_time_Start ) 
+print (' Y period End time = ', Y_time_End )
+​
+​
+X_Time = (X_time_End - X_time_Start ) /120 
+print ('X Period in Hours  = ', X_Time  )
+​
+Y_Time = (Y_time_End - Y_time_Start ) /120 
+print ('Y Period in Hours  = ', Y_Time )
+
+
+
+ X period Start time =  1155
+ X period End time =  1984
+ Y period Start time =  10921
+ Y period End time =  11745
+X Period in Hours  =  6.908333333333333
+Y Period in Hours  =  6.866666666666666
+In [180]:
+
+
+## Period wise Freezer & Fride average data 
+​
+#Average Power at  X Period 
+Power_avg_xx = np.mean(Power[X_time_Start:X_time_End])
+print('Average Power at   X Period ; ', Power_avg_xx)
+​
+​
+# Average Freezer Temperature  X Period 
+Freezer_avg_xx = np.mean(Freezer_Temp[X_time_Start:X_time_End])
+​
+print('Average Freezer Temperature at  X Period ; ', Freezer_avg_xx)
+​
+Fridge_avg_xx = np.mean(Fridge_Temp[X_time_Start:X_time_End])
+​
+print('Average Fridge Temperature at  X Period; ', Fridge_avg_xx)
+
+
+
+Average Power at   X Period ;  25.793486121911624
+Average Freezer Temperature at  X Period ;  -18.41783833912112
+Average Fridge Temperature at  X Period;  3.5977804641623905
+In [181]:
+
+
+## Period wise Freezer & Fride average data 
+​
+#Average Power at  X Period 
+Power_avg_yy = np.mean(Power[Y_time_Start:Y_time_End])
+print('Average Power at   Y Period ; ', Power_avg_yy)
+​
+# Average Freezer Temperature  Y Period 
+Freezer_avg_yy = np.mean(Freezer_Temp[Y_time_Start:Y_time_End])
+​
+print('Average Freezer Temperature at  Y Period ; ', Freezer_avg_yy)
+​
+Fridge_avg_yy = np.mean(Fridge_Temp[Y_time_Start:Y_time_End])
+​
+print('Average Fridge Temperature at  Y Period; ', Fridge_avg_yy)
+
+
+
+Average Power at   Y Period ;  25.92985440320471
+Average Freezer Temperature at  Y Period ;  -18.358373772750777
+Average Fridge Temperature at  Y Period;  3.63692152808785
+In [182]:
+
+
+print ('Energy at End up  X Period : ', Int_Energy[X_time_End] )
+print ('Energy at Start up  X Period : ', Int_Energy[X_time_Start] )
+print ('Energy at End up  y Period : ', Int_Energy[Y_time_End] )
+print ('Energy at Start up  y Period : ', Int_Energy[Y_time_Start] )
+
+
+
+Energy at End up  X Period :  423.8700256347656
+Energy at Start up  X Period :  246.00003051757812
+Energy at End up  y Period :  2600.0799560546875
+Energy at Start up  y Period :  2421.909957885742
+
+F & D Period Power and Temperature
+In [183]:
+
+
+print ('Energy at End up of d Period : ', Int_Energy[D_time_End] )
+print ('Energy at Start of  d Period : ', Int_Energy[D_time_Start] )
+print ('Energy at End up of f Period : ', Int_Energy[F_time_End] )
+print ('Energy at Start of  f Period : ', Int_Energy[F_time_Start] )
+
+
+
+Energy at End up of d Period :  373.0199890136719
+Energy at Start of  d Period :  246.00003051757812
+Energy at End up of f Period :  882.9199523925781
+Energy at Start of  f Period :  754.4199523925781
+In [184]:
+
+
+## Period wise Freezer & Fride average data 
+​
+#Average Power at  X Period 
+Power_avg_dd = np.mean(Power[D_time_Start:D_time_End])
+print('Average Power at   D Period ; ', Power_avg_dd)
+​
+# Average Freezer Temperature F Period 
+Freezer_avg_dd = np.mean(Freezer_Temp[D_time_Start:D_time_End])
+​
+print('Average Freezer Temperature at  D Period ; ', Freezer_avg_dd)
+​
+Fridge_avg_dd = np.mean(Fridge_Temp[D_time_Start:D_time_End])
+​
+print('Average Fridge Temperature at  D Period; ', Fridge_avg_dd)
+
+
+
+Average Power at   D Period ;  25.816694769951788
+Average Freezer Temperature at  D Period ;  -18.418711615654093
+Average Fridge Temperature at  D Period;  3.598611584401252
+In [185]:
+
+
+## Period wise Freezer & Fride average data 
+​
+#Average Power at  X Period 
+Power_avg_ff = np.mean(Power[F_time_Start:F_time_End])
+print('Average Power at   F Period ; ', Power_avg_ff)
+​
+# Average Freezer Temperature F Period 
+Freezer_avg_ff = np.mean(Freezer_Temp[F_time_Start:F_time_End])
+​
+print('Average Freezer Temperature at  F Period ; ', Freezer_avg_ff)
+​
+Fridge_avg_ff = np.mean(Fridge_Temp[F_time_Start:F_time_End])
+​
+print('Average Fridge Temperature at  F Period; ', Fridge_avg_ff)
+
+
+
+Average Power at   F Period ;  26.24863937497139
+Average Freezer Temperature at  F Period ;  -18.426197280364793
+Average Fridge Temperature at  F Period;  3.5820351527526526
+In [186]:
+
+
+# D & F Period length 
+print (' D period Start time = ', D_time_Start) 
+print (' D period End time = ', D_time_End  ) 
+​
+print (' F period Start time = ',F_time_Start ) 
+print (' F period End time = ', F_time_End )
+​
+​
+D_Time = (D_time_End - D_time_Start ) /120 
+print ('D Period in Hours  = ', D_Time  )
+​
+F_Time = (F_time_End - F_time_Start ) /120 
+print ('Y Period in Hours  = ', F_Time )
+
+
+
+ D period Start time =  1155
+ D period End time =  1748
+ F period Start time =  3211
+ F period End time =  3799
+D Period in Hours  =  4.941666666666666
+Y Period in Hours  =  4.9
+In [187]:
+
+
+#Estimated  Average Power at   D Period &  F period
+Power_avg_xy_e = (Power_avg_xx + Power_avg_yy)/2
+​
+print('Estimated  Average Power at   X Period &  Y period: ', Power_avg_xy_e)
+
+
+
+Estimated  Average Power at   X Period &  Y period:  25.861670262558167
+In [188]:
+
+
+
+
+#Estimated  Average Power at   D Period &  F period
+Power_avg_df_e = (Power_avg_D + Power_avg_F)/2
+​
+print('Estimated  Average Power at   D Period &  F period: ', Power_avg_df_e)
+
+
+
+Estimated  Average Power at   D Period &  F period:  26.03266707246159
+In [189]:
+
+
+# time Ration for X-Y and D-f period
+​
+Time_ratio_xy = X_Time/Y_Time
+Time_ratio_df = D_Time/F_Time
+​
+print('Estimated time ration between X and Y Period : ', Time_ratio_xy)
+print('Estimated time ration between D and F Period : ', Time_ratio_df)
+​
+
+
+
+Estimated time ration between X and Y Period :  1.0060679611650485
+Estimated time ration between D and F Period :  1.008503401360544
+In [190]:
+
+
+#Tspread_F  °C  0.5 °C  0.06        0.04    
+#Tspread_R  °C  0.5 °C  0.05        0.09    
+#P_spread(%)    %   < 2%    0.00        0.01    
+#P_spread(W)    W   1W  0.06        0.29    
+​
+
+
+
+
+Power and Temperature spread check
+In [191]:
+
+
+#P_spread(W)    W   1W  0.06        0.29    
+​
+Power_temp_spread_xy_e= np.abs(Power_avg_xx - Power_avg_yy)
+Power_temp_spread_df_e= np.abs(Power_avg_dd - Power_avg_ff)
+print ('Power spread in X & Y Period   = ', Power_temp_spread_xy_e )
+print ('Power spread in D & F Period   = ', Power_temp_spread_df_e )
+​
+
+
+
+Power spread in X & Y Period   =  0.13636828129308753
+Power spread in D & F Period   =  0.4319446050196021
+In [192]:
+
+
+#P_spread(%)    %   < 2%    0.00        0.01    
+Power_temp_spread_xy_t= (np.abs(Power_avg_xx - Power_avg_yy)/Power_avg_xy_e)*100
+Power_temp_spread_df_t= (np.abs(Power_avg_dd - Power_avg_ff)/Power_avg_df_e)*100
+print ('Power spread in X & Y Period in pecentage   = ', Power_temp_spread_xy_t,'%')
+print ('Power spread in D & F Period in percentage  = ', Power_temp_spread_df_t,'%' )
+
+
+
+Power spread in X & Y Period in pecentage   =  0.5272988167764163 %
+Power spread in D & F Period in percentage  =  1.659240691002923 %
+In [193]:
+
+
+Freezer_temp_spread_xy= np.abs(Freezer_avg_xx - Freezer_avg_yy)
+Freezer_temp_spread_df= np.abs(Freezer_avg_dd - Freezer_avg_ff)
+​
+​
+print ('Freezer Temperature spread in X & Y Period   = ', Freezer_temp_spread_xy )
+print ('Freezer Temperature spread in D & F Period   = ', Freezer_temp_spread_df )
+
+
+
+Freezer Temperature spread in X & Y Period   =  0.05946456637034103
+Freezer Temperature spread in D & F Period   =  0.00748566471069978
+In [194]:
+
+
+Fridge_temp_spread_xy= np.abs(Fridge_avg_xx - Fridge_avg_yy)
+Fridge_temp_spread_df= np.abs(Fridge_avg_dd - Fridge_avg_ff)
+​
+​
+print ('Fridge Temperature spread in X & Y Period   = ', Fridge_temp_spread_xy )
+print ('Fridge Temperature spread in D & F Period   = ', Fridge_temp_spread_df )
+
+
+
+Fridge Temperature spread in X & Y Period   =  0.03914106392545946
+Fridge Temperature spread in D & F Period   =  0.016576431648599232
+In [195]:
+
+
+## X and Y Temperature Value average individual period 
+Freezer_avg_xy_e = (Freezer_avg_xx +Freezer_avg_yy)/2
+​
+print('Average Freezer Temperature at  X Period and Y Period ; ', Freezer_avg_xy_e)
+​
+Fridge_avg_xy_e  =  (Fridge_avg_xx + Fridge_avg_yy)/2
+​
+print('Average Fridge Temperature at  X Period and Y Period ; ', Fridge_avg_xy_e)
+​
+
+
+
+Average Freezer Temperature at  X Period and Y Period ;  -18.38810605593595
+Average Fridge Temperature at  X Period and Y Period ;  3.6173509961251202
+In [196]:
+
+
+## D and F Temperature Value average individual period 
+Freezer_avg_df_e = (Freezer_avg_dd +Freezer_avg_ff)/2
+​
+print('Average Freezer Temperature at  D Period and F Period ; ', Freezer_avg_df_e)
+​
+Fridge_avg_df_e  =  (Fridge_avg_dd + Fridge_avg_ff)/2
+​
+print('Average Fridge Temperature at D Period and F Period ; ', Fridge_avg_df_e)
+
+
+
+Average Freezer Temperature at  D Period and F Period ;  -18.422454448009443
+Average Fridge Temperature at D Period and F Period ;  3.5903233685769522
+In [197]:
+
+
+## X end to Y end Temperature Value 
+​
+​
+# Average Freezer Temperature X End to Y end 
+Freezer_avg_xy_t = np.mean(Freezer_Temp[X_time_End:Y_time_End])
+​
+print('Average Freezer Temperature at  X Period End  to Y Period End  ; ', Freezer_avg_xy_t)
+​
+Fridge_avg_xy_t = np.mean(Fridge_Temp[X_time_End:Y_time_End])
+​
+print('Average Fridge Temperature at  X Period End to Y Period End  ; ', Fridge_avg_xy_t)
+
+
+
+Average Freezer Temperature at  X Period End  to Y Period End  ;  -18.2770232418864
+Average Fridge Temperature at  X Period End to Y Period End  ;  3.622173962373896
+In [198]:
+
+
+
+
+## D Start to F end Temperature Value 
+​
+# Average Freezer Temperature D Start to F end 
+Freezer_avg_df_t = np.mean(Freezer_Temp[D_time_Start:F_time_End])
+​
+print('Average Freezer Temperature at  D Period Start to F Period End  ; ', Freezer_avg_df_t)
+​
+Fridge_avg_df_t = np.mean(Fridge_Temp[D_time_Start:F_time_End])
+​
+print('Average Fridge Temperature at  D Period Start to F Period End  ; ', Fridge_avg_df_t)
+
+
+
+Average Freezer Temperature at  D Period Start to F Period End  ;  -17.93484870665122
+Average Fridge Temperature at  D Period Start to F Period End  ;  3.6814699992124127
+In [199]:
+
+
+print('compressor run % calculated based on stable period', comp_run_perct)
+
+
+
+compressor run % calculated based on stable period 0.5913043478260869
+In [200]:
+
+
+# Energy simulation calculation 
+Energy_Compensation= ((-18-T_favg)*0.035 + (4-T_ravg)*0.015)
+Energy_Compensation = (1-Energy_Compensation)
+Energy_simulation = Energy_Compensation*E_daily_year
+print('Simulated energy based on Target Temperature (-18/4) :    ', Energy_simulation)
+
+
+
+Simulated energy based on Target Temperature (-18/4) :     242.41397846328462
+
+All Result value export to excel
+In [205]:
+
+
+Reults_data = {'Description': ['Freezer Avg','Fridge Avg','Energy Start','Energy End', 'Time(hr)', 'Power Avg(W)' , 
+                              'Power_avg_XY, DF', 'Time Start', 'Time End', 'Time Diff: startD_endF//endX_endY',
+                               'Tspread_F', 'Tspread_R',
+                              'P_spread(%)', 'P_spread(W)', 'Time_Ratio', 'Tavg.F (X & Y // D & F)',
+                               'Tavg.R (X & Y // D & F)', 'Tavg Freez.:StartD_endF//endX_end Y',
+                              'Tavg Fridge:StartD_endF//endX_end Y', 'Pss2', '△Edfj', 'ΔTh df_F', 'ΔTh df_R',
+                              'Tss2_F','Tss2_R','Taverage_Freezer', 'Taverage_Fridge', 'Comp Run Percentage %',
+                              '△td-Max', '△td-Min', '△tdf', 'E_daily', 'Yearly Energy Consumption(KWH/Yr)', 
+                               'Simulated Energy at (-18/4)'],
+               
+               
+            'Unit/Spec' : ['°C','°C','Wh', 'Wh', 'X/Y>4hrs D/F>3hrs','W','W','Sec','Sec','°C','0.5°C','0.5°C',
+                            '<2%','<1W','0.8-1.2','°C','°C','°C','°C','W',
+                         'Wh','°C','°C','°C','°C','°C','°C','%','Hr','Hr','Hr','Wh/day','Kwh/Yr','Kwh/Yr'], 
+               
+            'X Period' : [Freezer_avg_xx,Fridge_avg_xx,Int_Energy[X_time_Start],Int_Energy[X_time_End],X_Time,
+                          Power_avg_xx,Power_avg_xy_e,X_time_Start,X_time_End,Est_time_xy,Freezer_temp_spread_xy,
+                          Fridge_temp_spread_xy,Power_temp_spread_xy_t,Power_temp_spread_xy_e, Time_ratio_xy,Freezer_avg_xy_e,
+                          Fridge_avg_xy_e, Freezer_avg_xy_t, Fridge_avg_xy_t,PSS2,
+                         del_Edf,del_Thdf_F,del_Thdf_R,Tss2_F,Tss2_R, T_favg, T_ravg,comp_run_perct*100,
+                          del_tdmax,del_tdmin,del_tdf,E_daily,E_daily_year,Energy_simulation],
+               
+            'Y Period' : [Freezer_avg_yy,Fridge_avg_yy,Int_Energy[Y_time_Start],Int_Energy[Y_time_End],Y_Time,
+                          Power_avg_yy," ",Y_time_Start,Y_time_End," "," "," "," "," ", " "," "," "," "," "," ",
+                         " "," "," "," "," "," "," "," "," "," "," "," "," "," "],
+               
+            'D Period' : [Freezer_avg_dd,Fridge_avg_dd,Int_Energy[D_time_Start],Int_Energy[D_time_End],D_Time,
+                          Power_avg_dd,Power_avg_df_e,D_time_Start,D_time_End,Est_time_df,Freezer_temp_spread_df,
+                          Fridge_temp_spread_df,Power_temp_spread_df_t,Power_temp_spread_df_e, Time_ratio_df,Freezer_avg_df_e,
+                          Fridge_avg_df_e,Freezer_avg_df_t, Fridge_avg_df_t," ",
+                         " "," "," "," "," "," "," "," "," "," "," "," "," "," "],
+               
+            'F Period' : [Freezer_avg_ff,Fridge_avg_ff,Int_Energy[F_time_Start],Int_Energy[F_time_End],F_Time,
+                          Power_avg_ff," ",F_time_Start,F_time_End," "," "," "," "," ", " "," "," "," "," "," ",
+                         " "," "," "," "," "," "," "," "," "," "," "," "," "," "],
+         }
+​
+R_data = pd.DataFrame(Reults_data, columns = ['Description', 'Unit/Spec', 'X Period', 'Y Period', 'D Period', 'F Period'])
+​
+print (R_data)
+
+
+
+                            Description          Unit/Spec     X Period  \
+0                           Freezer Avg                 °C   -18.417838   
+1                            Fridge Avg                 °C     3.597780   
+2                          Energy Start                 Wh   246.000031   
+3                            Energy End                 Wh   423.870026   
+4                              Time(hr)  X/Y>4hrs D/F>3hrs     6.908333   
+5                          Power Avg(W)                  W    25.793486   
+6                      Power_avg_XY, DF                  W    25.861670   
+7                            Time Start                Sec  1155.000000   
+8                              Time End                Sec  1984.000000   
+9     Time Diff: startD_endF//endX_endY                 °C    81.341667   
+10                            Tspread_F              0.5°C     0.059465   
+11                            Tspread_R              0.5°C     0.039141   
+12                          P_spread(%)                <2%     0.527299   
+13                          P_spread(W)                <1W     0.136368   
+14                           Time_Ratio            0.8-1.2     1.006068   
+15              Tavg.F (X & Y // D & F)                 °C   -18.388106   
+16              Tavg.R (X & Y // D & F)                 °C     3.617351   
+17  Tavg Freez.:StartD_endF//endX_end Y                 °C   -18.277023   
+18  Tavg Fridge:StartD_endF//endX_end Y                 °C     3.622174   
+19                                 Pss2                  W    25.975328   
+20                                △Edfj                 Wh    63.333491   
+21                             ΔTh df_F                 °C    13.825998   
+22                             ΔTh df_R                 °C     2.536108   
+23                               Tss2_F                 °C   -18.446998   
+24                               Tss2_R                 °C     3.590995   
+25                     Taverage_Freezer                 °C   -18.037904   
+26                      Taverage_Fridge                 °C     3.666036   
+27                Comp Run Percentage %                  %    59.130435   
+28                              △td-Max                 Hr    80.983333   
+29                              △td-Min                 Hr    10.147059   
+30                                 △tdf                 Hr    33.796662   
+31                              E_daily             Wh/day   668.382830   
+32    Yearly Energy Consumption(KWH/Yr)             Kwh/Yr   243.959733   
+33          Simulated Energy at (-18/4)             Kwh/Yr   242.413978   
+
+       Y Period    D Period    F Period  
+0    -18.358374  -18.418712  -18.426197  
+1      3.636922    3.598612    3.582035  
+2   2421.909958  246.000031  754.419952  
+3   2600.079956  373.019989  882.919952  
+4      6.866667    4.941667         4.9  
+5     25.929854   25.816695   26.248639  
+6                 26.032667              
+7         10921        1155        3211  
+8         11745        1748        3799  
+9                 22.033333              
+10                 0.007486              
+11                 0.016576              
+12                 1.659241              
+13                 0.431945              
+14                 1.008503              
+15               -18.422454              
+16                 3.590323              
+17               -17.934849              
+18                  3.68147              
+19                                       
+20                                       
+21                                       
+22                                       
+23                                       
+24                                       
+25                                       
+26                                       
+27                                       
+28                                       
+29                                       
+30                                       
+31                                       
+32                                       
+33                                       
+In [207]:
+
+
+
+Result_data = R_data.to_excel(r'D:\HAIL_DATA-1\E drive Data\2022\New Energy Norms _2023\Final.xlsx', sheet_name='final', index = False)
+
+
+
+In [ ]:
+
+
