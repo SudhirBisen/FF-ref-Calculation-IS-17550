@@ -26,6 +26,7 @@ Import Raw for calculation
 In [162]:
 VT_df = pd.read_excel(r'D:\HAIL_DATA-1\E drive Data\2022\New Energy Norms _2023\VT8_GG12\R04L2-VT8_G1_CC.xlsx' , sheet_name='Data')
 In [163]:
+
 # Display coloum of raw data C.
 
 VT_df.columns
@@ -39,12 +40,13 @@ Index(['Time', 'Date Time', 'Flag', 'Ambient Temp.', 'Ambient Humidity',
        'AMB-01', 'TC_19', 'AMB-02'],
       dtype='object')
 In [164]:
+
 Power = VT_df['Power']
 Power =np.array(Power)
 print('Length of data point in raw data: ', Power.shape)
 
 plt.figure(figsize=(500, 100))
-#plt_1 = plt.figure(figsize=(6, 3))
+plt_1 = plt.figure(figsize=(6, 3))
 
 plt.title("Power Graph ")
 plt.xlabel("Time ")
@@ -56,12 +58,12 @@ Length of data point in raw data:  (11600,)
 
  
 In [165]:
-#Define all require value to futher calculate the parameter
+# Define all require value to futher calculate the parameter
 Freezer_Temp = VT_df['Favg']
 Fridge_Temp = VT_df['Ravg']
 Int_Energy = VT_df ['Int_Power']
 
-Defrost calculation
+# Defrost calculation
 In [166]:
 Defrost_start = []
 x=len(Power) 
@@ -106,8 +108,9 @@ def cycle_time_data_clean (xxx):
     
     return xxx
 
-All paramter define for X period
+## All paramter define for X period
 In [168]:
+
 # data for power in X period
 aa = int(Defrost_start[0])
 Power_x = Power[:aa,]
@@ -118,6 +121,7 @@ print('No of data length in X period ', len(Power_x))
 
 No of data length in X period  1708
 In [169]:
+
 ## Plot X period 
 
 plt.figure(figsize=(500, 100))
@@ -129,6 +133,7 @@ Out[169]:
 
 Average Power calculation in Each Period ( function )
 In [170]:
+
 def average_power (raw_data):
     f = len(raw_data)
     number_cycle =[]
@@ -148,6 +153,7 @@ def average_power (raw_data):
 
 On Off Cycle calculation based on function
 In [171]:
+
 def on_off_cycle (raw_data):
     q = len(raw_data)
     on_cycle =[]        
@@ -166,8 +172,9 @@ def on_off_cycle (raw_data):
         
     return on_cycle , off_cycle
 
-Compressor Run percentage in each period ( function)
+# Compressor Run percentage in each period ( function)
 In [172]:
+
 def run_per (on , off):
     percentage = []
     x = len (on)
@@ -178,8 +185,9 @@ def run_per (on , off):
         percentage.append(per)
     return percentage
 
-Cycle average value in X period calculation
+# Cycle average value in X period calculation
 In [173]:
+
 cycle_average_value, no_cycle_x_period = average_power (Power_x)
 length = len (cycle_average_value)
 print('Number of cycle in X period: ', length )
@@ -192,7 +200,7 @@ print ('Cycle value start and end point: ',  no_cycle_x_period )
 
 Cycle value start and end point:  [66, 172, 173, 279, 386, 493, 599, 600, 707, 814, 922, 1029, 1136, 1243, 1350, 1458, 1566, 1640, 1641]
 
-On off cycle in x period and compressor Run
+# On off cycle in x period and compressor Run
 In [175]:
 Power_x_period  = cycle_time_data_clean (Power_x_period)
 X_on_cycle , X_off_cycle = on_off_cycle (Power_x_period)
@@ -203,13 +211,14 @@ print ('Off Cycle value start  point: ',  X_off_cycle )
 On Cycle value start point:  [66, 172, 278, 385, 492, 598, 705, 812, 920, 1027, 1134, 1241, 1348, 1456, 1564, 1638]
 Off Cycle value start  point:  [19, 126, 231, 337, 445, 552, 657, 765, 873, 980, 1087, 1194, 1301, 1409, 1516, 1624, 1695]
 In [176]:
+
 # Comprssor run percentage in x period
 comp_run_X = run_per (X_on_cycle , X_off_cycle) 
 print ('Cycle wise run percentage ', comp_run_X )
 
 Cycle wise run percentage  [0.5566037735849056, 0.5660377358490566, 0.5607476635514019, 0.5514018691588785, 0.5566037735849056, 0.5700934579439252, 0.5514018691588785, 0.5648148148148149, 0.5607476635514019, 0.5607476635514019, 0.5607476635514019, 0.5607476635514019, 0.5648148148148149, 0.5648148148148149]
 
-Property calculation for each cycle points
+# Property calculation for each cycle points
 In [177]:
  def all_temp_data (no_cycle_x_period, req_data):
     data_store= []
@@ -222,8 +231,9 @@ In [177]:
     return data_store
     
 
-All value in X period, Avg Power, Frezeer Temp, Fridge temp
+# All value in X period, Avg Power, Frezeer Temp, Fridge temp
 In [178]:
+
 Power_xxx = all_temp_data (no_cycle_x_period, Power_x)
 print(Power_xxx)
 
@@ -238,6 +248,7 @@ print('Average Power in X Period :', power_avg_x)
 Stable each cycle data  [27.213207456863152, 0.800000011920929, 26.98962257774371, 26.54953276609706, 26.99065423290306, 27.26320759586568, 0.800000011920929, 26.94112140163083, 26.89813092490223, 27.106481494175064, 26.943925204678116, 26.98785054850801, 26.848598200027073, 26.98598129894132, 27.034259364008904, 26.75092591566068, 38.454053973829424, 0.800000011920929]
 Average Power in X Period : 26.925256755304016
 In [180]:
+
 # Freezer Room average temperature in X period 
 freezer_temp_x = all_temp_data (no_cycle_x_period, Freezer_Temp)
 print('Stable each cycle data frezzer room ', freezer_temp_x)
@@ -251,6 +262,7 @@ print('Average Freezer in X Period :', freezer_avg_x)
 Stable each cycle data frezzer room  [-18.717773567055758, -17.822000122070314, -18.736811319387183, -18.74973828502905, -18.690224287443066, -18.66222643222449, -17.793999862670898, -18.7035514261121, -18.671794397585856, -18.65088888274299, -18.68439254760742, -18.67611216964009, -18.705457911981604, -18.672654212523845, -18.674777760329068, -18.689092568997975, -18.42464862256437, -20.147999954223632]
 Average Freezer in X Period : -18.683747861846665
 In [181]:
+
 # Frride Room average temperature in X period 
 fridge_temp_x = all_temp_data (no_cycle_x_period, Fridge_Temp)
 print('Stable each cycle data fridge room ', fridge_temp_x)
@@ -272,7 +284,7 @@ No of cycle period last time =  1641
 No of cycle period first time=  1243
 X Period in Hours  =  3.316666666666667
 
-Calculate all value in defrost to defrost cycle
+# Calculate all value in defrost to defrost cycle
 In [183]:
 # data for power in Y period
 ab = int(Defrost_end[0])
@@ -286,6 +298,7 @@ print ('Y period data length: ',Power_y.shape )
    1.60000002]
 Y period data length:  (9666,)
 In [184]:
+
 ## Plot Between defrost to defrost period 
 
 plt.figure(figsize=(500, 100))
@@ -320,14 +333,10 @@ print('Average Power in Y Period :', power_avg_y)
 Stable each cycle data  [39.429629604757565, 29.425892937396252, 27.902803723500153, 27.55047614177068, 27.080000027588436, 27.342307808307503, 27.295192254277374, 27.16952376252129, 26.97333328099478, 27.083809601409094, 27.340384670175037, 27.324761923154195, 1.5, 27.10666675908225, 27.063809573082697, 27.050476187183744, 27.21509427057122, 27.128571450710297, 27.413084031265473, 27.072380935010457, 27.12000009786515, 27.048113069444334, 27.311320766525448, 27.14666662954149, 0.800000011920929, 27.350476199672336, 26.82710286668528, 26.74716967288053, 26.996190487486974, 27.055238097054616, 26.897142826375507, 26.752381009147282, 27.215238137472245, 27.119811252040684, 26.94190479687282, 0.800000011920929, 27.27523808649608, 27.19716961541266, 27.502803640944936, 27.00095253898984, 27.123584868210667, 27.01214965982972, 27.252830236025577, 26.808411191, 26.980373808156664, 27.24433951332884, 27.413084281382158, 27.217924683161502, 26.773831717321805, 26.797169960332365, 27.2660377925297, 27.261320757978368, 27.081308434499757, 27.133962269661563, 27.266981217096436, 0.800000011920929, 27.08679234756614, 26.880373701313946, 27.189622653542823, 0.800000011920929, 26.98396229069188, 26.910280448811076, 27.149056575770647, 26.956074756996653, 27.024299183181512, 27.222429759591538, 27.20754723054058, 27.00747669077365, 26.990654090297557, 26.992523326494982, 26.991588737920065, 26.891509378293776, 26.87943919406873, 26.95233644001952, 26.881308464246377, 26.899065331320898, 26.937383119190965, 26.98317769587597, 26.98411220200708, 26.914018709525884, 26.91869155714445, 27.21775699831615, 27.218518593245083, 27.292523371282027, 0.800000011920929, 27.12336444186273, 27.068518630332417, 27.088784968741585, 27.143518302727628, 26.894392555005084, 27.087850380166667, 27.17169816201588, 0.8999999761581421, 27.023584826937263, 0.800000011920929, 27.1813084148915, 26.66915893666098, 38.78133322238922]
 Average Power in Y Period : 18.360740295348396
 In [188]:
-## Plot Y period
-# Power_y_plot = Freezer_Temp[ab:bb,]
-# plt.figure(figsize=(500, 100))
-# plt.plot(Power_y_plot, color = 'r', linewidth = '10')
-# #plt.title("Value between two derost")
 
 # Power_y_plot
 In [189]:
+
 # Freezer Room average temperature in Y period 
 Freezer_Temp_y = Freezer_Temp[ab:bb,]
 freezer_temp_y = all_temp_data (no_cycle_y_period, Freezer_Temp_y)
@@ -339,7 +348,9 @@ print('Average Freezer in Y Period :', freezer_avg_y)
 Stable each cycle data frezzer room  [-14.633185191473201, -18.677303622450147, -18.74852337703527, -18.747904792059035, -18.715523861476356, -18.720596163089457, -18.73017312930181, -18.70457143147786, -18.71184762137277, -18.72083810715448, -18.703211600963897, -18.705447616577146, -17.858000183105467, -18.69365717388334, -18.708857127598357, -18.663695266360328, -18.64630191191187, -18.604495208376935, -18.62525231192046, -18.642704792930967, -18.64207615988596, -18.61358490170173, -18.645584890977393, -18.63388567788261, -17.755999755859374, -18.623333342415947, -18.65829908424449, -18.659735864963174, -18.696895206996366, -18.702533313206256, -18.726971422831216, -18.752476192656015, -18.769009546552383, -18.76247169206727, -18.739447630019427, -17.8439998626709, -18.70038094111851, -18.68716978936825, -18.684112158445547, -18.69396188645136, -18.70201882236409, -18.72000002281688, -18.704056624646455, -18.692336444319974, -18.677476651200628, -18.703301892190616, -18.682411227716468, -18.71177358627319, -18.680112164934098, -18.700301886504544, -18.685113208698773, -18.694603781430224, -18.700448576312187, -18.706226426250527, -18.697547160454516, -17.820000076293944, -18.704018886134314, -18.71013078778704, -18.69826417239207, -17.79199981689453, -18.695150958367122, -18.68738319183064, -18.69473586172428, -18.710093487534568, -18.714691598838744, -18.706878467809375, -18.694698110616425, -18.694112123507214, -18.698018744281516, -18.675607460235884, -18.697495326817595, -18.726339622713486, -18.693719625027377, -18.714186925085908, -18.684934608958596, -18.70394394063504, -18.702542071476163, -18.717775747709183, -18.69323362546546, -18.681850438697314, -18.70265423070604, -18.699345793679502, -18.677129623625014, -18.691084109511337, -17.793999862670898, -18.701887891894188, -18.67490741058633, -18.703943924591922, -18.679240735371902, -18.733457921821373, -18.763943916392105, -18.772849070351075, -17.89399948120117, -18.756811309310624, -17.77999954223633, -18.72758880686536, -18.720616859364732, -18.49842663574219]
 Average Freezer in Y Period : -18.44919868772611
 In [190]:
+
 # Fridge Room average temperature in X period 
+
 Fridge_Temp_y=  Fridge_Temp[ab:bb,]
 fridge_temp_y = all_temp_data (no_cycle_y_period, Fridge_Temp_y)
 print('Stable each cycle data fridge room ', fridge_temp_y)
@@ -370,8 +381,9 @@ Out[192]:
 
  
 
-Now calculated Other paramter between X - Y Period
+# Now calculated Other paramter between X - Y Period
 In [193]:
+
 # Energy (wh) value during the test period
 Int_Energy =np.array(Int_Energy)
 plt.plot(Int_Energy)
@@ -414,6 +426,7 @@ print('Average Power at end up  X Period to end up Y period; ', Power_avg_xy)
 
 Average Power at end up  X Period to end up Y period;  27.964411338417026
 In [197]:
+
 # Average Freezer Temperature at end up  X Period to end up Y period
 Freezer_avg_xy = np.mean(Freezer_Temp[X_time_End:Y_time_End])
 
@@ -429,6 +442,7 @@ print('Average Fridge Temperature at end up  X Period to end up Y period; ', Fri
 
 Average Fridge Temperature at end up  X Period to end up Y period;  3.4427763995108727
 In [199]:
+
 # Estimated Time at end up  X Period to end up Y period
 print ('Time at End up  x Period : ', X_time_End )
 print ('Time at End up  y Period : ', Y_time_End )
@@ -440,6 +454,7 @@ Time at End up  x Period :  1641
 Time at End up  y Period :  11307
 Estimated Time at end up  X Period to end up Y period :  80.55
 In [200]:
+
 # Estimated  Energy at end up  X Period to end up Y period
 Est_Int_Energy_xy = Int_Energy[Y_time_End] - Int_Energy[x_time_End]
 print ('Estimated  Energy at end up  X Period to end up Y period : ', Est_Int_Energy_xy    )
@@ -448,12 +463,14 @@ Estimated  Energy at end up  X Period to end up Y period :  2252.470001220703
 
 Calculate the paramter for Period D and F
 In [201]:
+
 # D period taken from before of 1st defrost
 no_cycle_d_period = no_cycle_x_period[-6:]
 print('data ponit taken for D period: ' , no_cycle_d_period  )
 
 data ponit taken for D period:  [1243, 1350, 1458, 1566, 1640, 1641]
 In [202]:
+
 # f period taken from before of 1st defrost
 no_cycle_f_period = no_cycle_y_period[4:10] 
 no_cycle_f_period = [ x + ab for x in no_cycle_f_period]
@@ -461,8 +478,9 @@ print('data ponit taken for D period: ' , no_cycle_f_period  )
 
 data ponit taken for D period:  [2240, 2345, 2449, 2553, 2658, 2763]
 
-D & F Period calcuated, now need to calculated value Time , Energy, temperature
+# D & F Period calcuated, now need to calculated value Time , Energy, temperature
 In [203]:
+
 d_time_End = no_cycle_d_period[-1]
 print ('No of cycle period last time = ', no_cycle_d_period[-1]) 
 d_time_Start = no_cycle_d_period[-6]
@@ -485,7 +503,7 @@ No of cycle period last time =  2763
 No of cycle period first time=  2240
 F Period in Hours  =  4.358333333333333
 
-Energy & Time in D & F Period
+# Energy & Time in D & F Period
 In [205]:
 D_time_End = d_time_End
 D_time_Start = d_time_Start
@@ -503,7 +521,7 @@ Energy at Start of  d Period :  271.8999938964844
 Energy at End up of f Period :  688.2100219726562
 Energy at Start of  f Period :  569.5499877929688
 
-Average power , Temperature , Energy in individual D & F periods
+# Average power , Temperature , Energy in individual D & F periods
 In [206]:
 #Average Power in  D Period						
 #Average Power in  F Period						
@@ -544,9 +562,9 @@ print('Average Freezer Temperature in  F Period; ', Fridge_avg_F)
 Average Freezer Temperature in  D Period;  3.433609710416596
 Average Freezer Temperature in  F Period;  3.384614402545798
 
-Estimated Energy, Avg Temperature between period D & F
+# Estimated Energy, Avg Temperature between period D & F
 In [209]:
-#Estimated  Energy at end up  D Period to end up F period
+# Estimated  Energy at end up  D Period to end up F period
 
 Est_Int_Energy_DF = Int_Energy[F_time_End] - Int_Energy[D_time_End]
 print ('Estimated  Energy at end up  D Period to end up F period : ', Est_Int_Energy_DF    )
@@ -557,7 +575,8 @@ print ('Estimated  Energy at Start of  D Period to end up F period : ', Est_Int_
 Estimated  Energy at end up  D Period to end up F period :  319.9800109863281
 Estimated  Energy at Start of  D Period to end up F period :  416.3100280761719
 In [210]:
-#Estimated  Time at end up  D Period to end up F period
+
+# Estimated  Time at end up  D Period to end up F period
 
 
 print ('Time at End up  F Period : ', F_time_End )
@@ -620,8 +639,8 @@ Time at Sart of  D Period :  1243
 Time at End up  F Period :  2763
 Estimated  Time (hours) at   D Period Start to  F period end:  12.666666666666666
 
-Calculate factors Tdf , F_Tavg , R_Tavg and
-∆Edf , ∆Thdf for F & R Compartment calculation
+# Calculate factors Tdf , F_Tavg , R_Tavg and
+# ∆Edf , ∆Thdf for F & R Compartment calculation
 In [217]:
 # Accumulated temperature difference over time in compartment F (∆Thdf_F)
 del_Thdf_F =  Est_time_df *(Freezer_avg_DF - Freezer_avg_df)
@@ -646,13 +665,10 @@ print ('Additional energy consumed by the refrigerating appliance for defrost an
 
 Additional energy consumed by the refrigerating appliance for defrost and recovery period (∆Edf) :  60.54598907186897
 
-machine run % During stable period
+# machine run % During stable period
 In [233]:
-#compressor run % calculated based on stable period (consider X  Period)
+# compressor run % calculated based on stable period (consider X  Period)
 on_time, off_time =  on_off_cycle (Power_x_period)
-
-# on_t = len(on_time)
-# off_t =len(off_time)
 
 run_per_comp = run_per (on_time, off_time)
 comp_run_perct = np.mean (run_per_comp[5])
@@ -663,12 +679,14 @@ compressor run % calculated based on stable period 0.5700934579439252
 
 Tdf calculation based compresssor run time & other factor
 In [234]:
-#maximum possible defrost interval ∆tdmax 
+
+# maximum possible defrost interval ∆tdmax 
 del_tdmax = 39/comp_run_perct
 
 # minimum possible defrost interval (∆tdmini)
 del_tdmin = 6/comp_run_perct
 In [235]:
+
 # Actual defrost interval in data 
 del_tdact = (Defrost_start[1] -Defrost_start[0] )/120
 print ('Actual defrost interval in data  (∆tdact) : ' , del_tdact )
@@ -682,14 +700,15 @@ print('Defrost interval for an ambient temperature of 32 °C (∆tdf) : ', del_t
 
 Defrost interval for an ambient temperature of 32 °C (∆tdf) :  32.576112412177984
 In [237]:
-#Steady state power for the selected defrost control cycle (PSS2)
+
+# Steady state power for the selected defrost control cycle (PSS2)
 PSS2 =  (Est_Int_Energy_xy-del_Edf) / Est_time_xy
 
 print ('Steady state power for the selected defrost control cycle (PSS2)' , PSS2)
 
 Steady state power for the selected defrost control cycle (PSS2) 27.21196787273537
 
-Enrgy consumption daily and year (E_daily)
+# Enrgy consumption daily and year (E_daily)
 In [238]:
 #Energy in Wh over a period of 24hr
 E_daily = PSS2*24 + (del_Edf*24)/del_tdf
@@ -697,7 +716,7 @@ E_daily = PSS2*24 + (del_Edf*24)/del_tdf
 print ('Energy in Wh over a period of 24hr (E_daily)' , E_daily)
 
 
-#Energy in Wh over a period of year (unit)
+# Energy in Wh over a period of year (unit)
 E_daily_year = E_daily*0.365
 
 print ('Energy in Wh over a period of year (unit) (E_daily_year)' , E_daily_year)
@@ -707,7 +726,8 @@ Energy in Wh over a period of year (unit) (E_daily_year) 254.6581817026965
 
 Average Temperature calculated in F & R Compartment
 In [239]:
-#steady state temperature in compartment F that occurs in the whole test period used for SS2 in degrees C;						
+
+# steady state temperature in compartment F that occurs in the whole test period used for SS2 in degrees C;						
 Tss2_F =  Freezer_avg_xy-   (del_Thdf_F/Est_time_xy)
 print ('steady state temperature in compartment F that occurs in the whole test period used for SS2' , Tss2_F)
 
@@ -731,7 +751,7 @@ print ('Average temperature for the compartment R over a complete defrost contro
 
 Average temperature for the compartment R over a complete defrost control cycle : 3.4594761390430477
 
-We have to conculde our results based on defrost percentage
+# We have to conculde our results based on defrost percentage
 In [243]:
 print('X-Y period Energy ', Est_Int_Energy_xy)
 print('X-Y period Time', Est_time_xy)
@@ -746,6 +766,7 @@ for more detail check upper code
 Daily Wh energy comsumption based derost to defrost data, consider one defrost average data in 24hr 671.1270022259079
 Calculated Daily Wh energy comsumption based on all factors 697.6936485005384
 In [244]:
+
 ## Percentage increase in energy due to defrost factor
 Percentage_increase_energy = (E_daily-H24_energy)*100 /H24_energy
 
@@ -779,7 +800,7 @@ In [ ]:
  
 
 
-Value calculation for Data export to excel
+# Value calculation for Data export to excel
 In [177]:
 
 
